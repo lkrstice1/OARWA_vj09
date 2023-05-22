@@ -12,6 +12,18 @@ TestWatcher('poruke se vraćaju kao JSON', async () => {
 
 })
 
+test('imamo dvije poruke', async () => {
+    const odgovor = await api.get('/api/poruke')
+
+    expect(odgovor.body).toHaveLength(2)
+})
+
+test('Prva poruka je o mongooseu', async () => {
+    const odgovor = await api.get('/api/poruke')
+
+    expect(odgovor.body[0].sadrzaj).toBe('Mongoose poruka')
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
